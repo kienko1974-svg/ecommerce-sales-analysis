@@ -1,0 +1,51 @@
+﻿/* ПРОЕКТ: Аналіз ефективності продажів E-commerce
+МЕТА: Підготовка набору даних для аналізу в Python та візуалізації в Tableau.
+Цей запит об'єднує дані про сесії, джерела трафіку, акаунти користувачів та деталі замовлень.
+*/
+
+
+SELECT s.date,                               -- Дата сесії
+       s.ga_session_id,                      -- Унікальний ID сесії
+       sp.continent,                         -- Географія: Континент
+       sp.country,                           -- Географія: Країна
+       sp.device,                            -- Тип пристрою
+       sp.browser,                           -- Браузер
+       sp.mobile_model_name,                 -- Модель мобільного (для мобільних пристроїв)
+       sp.operating_system,                  -- Операційна система
+       sp.language,                          -- Мова користувача
+       sp.name AS traffic_source,            -- Джерело трафіку
+       sp.channel,                           -- Маркетинговий канал (Organic, Direct, Paid тощо)
+       sp.medium,                            -- Тип носія трафіку
+       acs.account_id,                       -- ID акаунта (якщо користувач авторизований)
+       ac.is_verified,                       -- Чи верифікований акаунт
+       ac.is_unsubscribed,                   -- Чи відписався користувач від розсилок
+       p.name AS product_name,               -- Назва купленого товару
+       p.category,                           -- Категорія товару
+       p.price,                              -- Ціна товару
+       p.short_description                   -- Короткий опис товару
+
+
+FROM `DA.session` as s
+-- Приєднуємо параметри сесії та джерела трафіку
+LEFT JOIN `DA.session_params` AS sp
+ON sp.ga_session_id = s.ga_session_id
+
+
+-- Приєднуємо зв'язок акаунтів із сесіями
+LEFT JOIN `DA.account_session` AS acs
+ON acs.ga_session_id = s.ga_session_id
+
+
+-- Приєднуємо дані про акаунти для сегментації (Registered vs Guest)
+LEFT JOIN `DA.account` AS ac
+ON ac.id = acs.account_id
+
+
+-- Приєднуємо дані про замовлення в рамках сесії
+LEFT JOIN `DA.order` AS o
+ON o.ga_session_id = s.ga_session_id
+
+
+-- Приєднуємо деталі продуктів для аналізу асортименту
+LEFT JOIN `DA.product` AS p
+ON p.item_id = o.item_id
