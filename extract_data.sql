@@ -48,4 +48,5 @@ ON o.ga_session_id = s.ga_session_id
 
 -- Приєднуємо деталі продуктів для аналізу асортименту
 LEFT JOIN `DA.product` AS p
+
 ON p.item_id = o.item_id
