@@ -1,2 +1,13 @@
-# ecommerce-sales-analysis
-Analysis of e-commerce sales performance using Python and Tableau
+# Аналіз ефективності продажів E-commerce (SQL, Python, Tableau)
+
+Цей проект демонструє повний цикл аналізу даних: від витягування з БД до візуалізації KPI.
+
+##  Етапи та інструменти
+* **SQL:** Збір даних про замовлення, сесії та доходи.
+* **Python (Pandas, Scipy):** Очищення даних та статистична перевірка гіпотез (Mann-Whitney U-test).
+* **Tableau:** Побудова інтерактивного дашборду на 2 сторінки.
+
+##  Результати
+* **[Переглянути інтерактивний дашборд у Tableau Public](https://public.tableau.com/app/profile/.43866940/viz/Book6_17702264279980/SalesOverview)**
+* Підтверджено ідентичність розподілу середніх чеків між Americas та Europe.
+* Виявлено, що Guest-користувачі генерують 92% доходу.
